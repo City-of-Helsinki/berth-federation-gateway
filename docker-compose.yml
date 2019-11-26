@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+    app:
+        build:
+            context: .
+            target: ${DOCKER_TARGET:-development}
+        env_file: docker-compose.env.yaml
+        volumes:
+            - .:/app
+            - /app/node_modules
+        ports:
+            - "3000:3000"
+        container_name: berth-federation
+
+networks:
+    default:
+        name: helsinki
