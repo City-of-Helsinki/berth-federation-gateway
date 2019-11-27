@@ -29,7 +29,10 @@ This specific gateway combines two projects:
         - https://profile.test.kuva.hel.ninja/graphql/ for profile
         - https://venepaikka-api.test.hel.ninja/graphql_v2/ for berths
 
-3. Run `docker-compose up`
+3. Adjust other variables according to your needs.
 
-The project is now running at [localhost:3000](http://localhost:3000)
+4. Run `docker-compose up`
+
+The project is now running at [localhost:3000](http://localhost:3000) (or at the
+PORT you specified in the `docker-compose.env.yaml`)
 

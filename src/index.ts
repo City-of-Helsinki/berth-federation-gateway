@@ -6,6 +6,8 @@ dotenv.config();
 
 const debug: boolean = process.env.DEBUG === "debug" || process.env.ENV !== "production";
 
+const port: number = parseInt(process.env.PORT);
+
 const openCityProfileBackend: string = process.env.OPEN_CITY_PROFILE_API_URL;
 const berthReservationsBackend: string = process.env.BERTH_RESERVATIONS_API_URL;
 
@@ -43,7 +45,7 @@ const gateway = new ApolloGateway({
         introspection: debug   
     });
 
-    server.listen(3000).then(({ url }) => {
+    server.listen(port).then(({ url }) => {
         // eslint-disable-next-line no-console
         console.log(`🚀 Server ready at ${url}`)
     });
