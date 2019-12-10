@@ -1,0 +1,15 @@
+sudo: false
+language: node_js
+node_js:
+  - '12'
+cache:
+  yarn: true
+  directories:
+    - node_modules
+install:
+  - yarn
+jobs:
+  include:
+    - stage: 'Test'
+      name: 'Run dummy test'
+      script: yarn test

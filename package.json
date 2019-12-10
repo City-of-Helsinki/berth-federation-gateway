@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ext ts --exec 'ts-node' src/index.ts"
+    "start": "nodemon --ext ts --exec 'ts-node' src/index.ts",
+    "test": "echo \"Error: no test specified, everything must work\" && exit 0"
   },
   "author": "",
   "license": "ISC",

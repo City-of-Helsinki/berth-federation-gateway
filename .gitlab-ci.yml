@@ -42,4 +42,3 @@ staging:
   only:
     refs:
       - develop
-      
