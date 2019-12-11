@@ -6,9 +6,9 @@ import * as express from "express";
 
 dotenv.config();
 
-const debug: boolean = process.env.DEBUG === "debug" || process.env.ENV !== "production";
+const debug: boolean = process.env.DEBUG === "debug" || process.env.NODE_ENV !== "production";
 
-const port: number = parseInt(process.env.PORT);
+const port: number = parseInt(process.env.PORT || "80");
 
 const openCityProfileBackend: string = process.env.OPEN_CITY_PROFILE_API_URL;
 const berthReservationsBackend: string = process.env.BERTH_RESERVATIONS_API_URL;
