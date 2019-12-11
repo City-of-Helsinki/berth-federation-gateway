@@ -60,7 +60,17 @@ COPY --chown=appuser:appuser . .
 CMD ["npm", "start"]
 
 # =============================
-FROM nginx:1.17 as production
+FROM appbase as production
 # =============================
 
-# TODO: figure out how to run prod
+# TODO: figure out how to run prod, for now it mirrors dev
+
+# Set NODE_ENV to production in the production container
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
+
+# Copy in our source code last, as it changes the most
+COPY --chown=appuser:appuser . .
+
+# Bake package.json start command into the image
+CMD ["npm", "start"]
