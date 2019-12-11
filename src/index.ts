@@ -6,7 +6,7 @@ import * as express from "express";
 
 dotenv.config();
 
-const debug: boolean = process.env.DEBUG === "debug" || process.env.ENV !== "production";
+const debug: boolean = process.env.DEBUG === "debug" || process.env.NODE_ENV !== "production";
 
 const port: number = parseInt(process.env.PORT);
 
