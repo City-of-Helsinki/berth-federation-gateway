@@ -26,7 +26,7 @@ This specific gateway combines two projects:
     * current placeholder in the template will work if you use default docker-compose
       setups for each project
     * you can use the test instances managed by the City of Helsinki:
-        - https://profile.test.kuva.hel.ninja/graphql/ for profile
+        - https://helsinkiprofile.test.kuva.hel.ninja/graphql/ for profile
         - https://venepaikka-api.test.hel.ninja/graphql_v2/ for berths
 
 3. Adjust other variables according to your needs.
