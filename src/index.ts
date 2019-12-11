@@ -1,6 +1,8 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "apollo-server-express";
 import { ApolloGateway, RemoteGraphQLDataSource } from '@apollo/gateway';
+import * as cors from "cors";
 import * as dotenv  from "dotenv";
+import * as express from "express";
 
 dotenv.config();
 
@@ -66,8 +68,23 @@ const gateway = new ApolloGateway({
         introspection: debug   
     });
 
-    server.listen(port).then(({ url }) => {
-        // eslint-disable-next-line no-console
-        console.log(`🚀 Server ready at ${url}`)
+    const app = express();
+
+    app.use(cors());
+
+    // TODO: check that app actually works
+    app.get("/readiness", ( req, res ) => {
+        res.status(200).json({status: "OK"});
     });
+
+    app.get( "/healthz", ( req, res ) => {
+        res.status(200).json({status: "OK"});
+    });
+
+    server.applyMiddleware({ app, path: "/" });
+
+    app.listen({ port }, () =>
+        // eslint-disable-next-line no-console
+        console.log(`🚀 Server ready at http://localhost:${port}`)
+    );
 })();
