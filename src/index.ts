@@ -46,7 +46,7 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
 const gateway = new ApolloGateway({
     serviceList: [
         // name of the service is the same as its API scope for auth purposes
-        { name: "https://api.hel.fi/auth/profiles", url: openCityProfileBackend },
+        { name: "https://api.hel.fi/auth/helsinkiprofile", url: openCityProfileBackend },
         { name: "https://api.hel.fi/auth/berths", url: berthReservationsBackend },
     ],
     buildService({ name, url }) {
