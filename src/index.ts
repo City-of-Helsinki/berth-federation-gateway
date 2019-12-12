@@ -32,12 +32,22 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
         // (context as any) due to typescript-related bug in apollo-gateway:
         // https://github.com/apollographql/apollo-server/issues/3307
         if ((context as any).apiTokens) {
-            let apiTokens = JSON.parse((context as any).apiTokens);
+            let apiTokens = (context as any).apiTokens.split(";");
 
-            request.http.headers.set(
-                "Authorization",
-                "Bearer " + apiTokens[this.name]
-            );
+            let token: string;
+            
+            apiTokens.forEach((apiToken: string) => {
+                if (apiToken.startsWith(this.name)) {
+                    token = apiToken.replace(this.name, "").trim();
+                }
+            });
+
+            if (token) {
+                request.http.headers.set(
+                    "Authorization",
+                    "Bearer " + token
+                );
+            }
         }
     }
 }
