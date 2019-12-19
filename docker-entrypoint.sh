@@ -28,6 +28,5 @@ if [[ ! -z "$@" ]]; then
 elif [[ "$DEV_SERVER" = "1" ]]; then
     npm start
 else
-    # TODO: Configure production setup
-    npm start
+    npm run serve
 fi

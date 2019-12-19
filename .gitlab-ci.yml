@@ -10,7 +10,7 @@ build-review:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-review"
-    DOCKER_BUILD_ARG_NODE_ENV: "development"
+    DOCKER_BUILD_ARG_DEBUG: "debug"
     DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
     DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.hel.ninja/graphql_v2/"
   only:
@@ -21,7 +21,7 @@ build-staging:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-staging"
-    DOCKER_BUILD_ARG_NODE_ENV: "development"
+    DOCKER_BUILD_ARG_DEBUG: "debug"
     DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
     DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.hel.ninja/graphql_v2/"
   only:
@@ -32,7 +32,6 @@ build-production:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
-    DOCKER_BUILD_ARG_NODE_ENV: "production"
     DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: ""
     DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: ""
   only:
