@@ -39,6 +39,11 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
                 "Bearer " + apiTokens[this.name]
             );
         }
+
+        request.http.headers.set(
+            "Accept-Language",
+            (context as any).acceptLanguage
+        );
     }
 }
 
@@ -60,8 +65,9 @@ const gateway = new ApolloGateway({
         gateway,
         subscriptions: false,
         context: ({ req }) => {
-            const apiTokens = req.headers["api-tokens"] || "";
-            return { apiTokens };
+            const apiTokens: string = req.headers["api-tokens"] || "";
+            const acceptLanguage: string = req.headers["accept-language"] || "";
+            return { apiTokens, acceptLanguage };
         },
         debug: debug,
         playground: debug,
