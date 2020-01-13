@@ -57,6 +57,7 @@ const gateway = new ApolloGateway({
     buildService({ name, url }) {
         return new AuthenticatedDataSource({ name, url });
     },
+    experimental_pollInterval: 600000,  // every 10 min
 });
 
 
