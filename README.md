@@ -36,3 +36,6 @@ This specific gateway combines two projects:
 The project is now running at [localhost:3000](http://localhost:3000) (or at the
 PORT you specified in the `docker-compose.env.yaml`)
 
+## Environments
+
+Test environment: https://venepaikka-federation.test.kuva.hel.ninja/
