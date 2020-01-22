@@ -8,8 +8,7 @@ dotenv.config();
 
 const debug: boolean = process.env.DEBUG === "debug" || process.env.NODE_ENV !== "production";
 
-const port: number = parseInt(process.env.PORT || "3000");
-
+const port: string = process.env.PORT || "3000";
 const openCityProfileBackend: string = process.env.OPEN_CITY_PROFILE_API_URL;
 const berthReservationsBackend: string = process.env.BERTH_RESERVATIONS_API_URL;
 
@@ -71,12 +70,23 @@ const gateway = new ApolloGateway({
         },
         debug: debug,
         playground: debug,
-        introspection: debug   
+        introspection: debug
     });
 
     const app = express();
 
     app.use(cors());
+
+    // GraphQL Voyager schema visualization
+    if (debug) {
+        const voyagerMiddleware = require('graphql-voyager/middleware').express;
+        app.use('/voyager', voyagerMiddleware({
+            endpointUrl: '/graphql',
+            displayOptions: {
+                sortByAlphabet: true,
+            },
+        }));
+    }
 
     // TODO: check that app actually works
     app.get("/readiness", ( req, res ) => {
