@@ -39,3 +39,5 @@ PORT you specified in the `docker-compose.env.yaml`)
 ## Environments
 
 Test environment: https://venepaikka-federation.test.kuva.hel.ninja/
+
+Voyager graph of all Quieries: https://venepaikka-federation.test.kuva.hel.ninja/voyager
