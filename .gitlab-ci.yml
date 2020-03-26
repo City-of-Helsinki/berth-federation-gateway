@@ -11,7 +11,7 @@ build-review:
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-review"
     DOCKER_BUILD_ARG_DEBUG: "debug"
-    DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
+    DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
     DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.hel.ninja/graphql_v2/"
   only:
     refs:
@@ -22,7 +22,7 @@ build-staging:
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-staging"
     DOCKER_BUILD_ARG_DEBUG: "debug"
-    DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://helsinkiprofile.test.kuva.hel.ninja/graphql/"
+    DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
     DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.hel.ninja/graphql_v2/"
   only:
     refs:
