@@ -1,8 +1,9 @@
 import { ApolloServer } from "apollo-server-express";
-import { ApolloGateway, RemoteGraphQLDataSource } from '@apollo/gateway';
+import { ApolloGateway } from '@apollo/gateway';
 import * as cors from "cors";
 import * as dotenv  from "dotenv";
 import * as express from "express";
+import { AuthenticatedDataSource } from "./dataSources"
 
 dotenv.config();
 
@@ -11,41 +12,6 @@ const debug: boolean = process.env.DEBUG === "debug" || process.env.NODE_ENV !==
 const port: string = process.env.PORT || "3000";
 const openCityProfileBackend: string = process.env.OPEN_CITY_PROFILE_API_URL;
 const berthReservationsBackend: string = process.env.BERTH_RESERVATIONS_API_URL;
-
-
-class AuthenticatedDataSource extends RemoteGraphQLDataSource {
-    // Make the class accept "name" property
-    constructor(
-        config?: Partial<AuthenticatedDataSource> &
-            object &
-            ThisType<AuthenticatedDataSource>,
-    ) {
-        super();
-        if (config) {
-            return Object.assign(this, config);
-        }
-    }
-    name!: string;
-
-    willSendRequest({ request, context }) {
-        // (context as any) due to typescript-related bug in apollo-gateway:
-        // https://github.com/apollographql/apollo-server/issues/3307
-        if ((context as any).apiTokens) {
-            let apiTokens = JSON.parse((context as any).apiTokens);
-
-            request.http.headers.set(
-                "Authorization",
-                "Bearer " + apiTokens[this.name]
-            );
-        }
-
-        request.http.headers.set(
-            "Accept-Language",
-            (context as any).acceptLanguage
-        );
-    }
-}
-
 
 const gateway = new ApolloGateway({
     serviceList: [
