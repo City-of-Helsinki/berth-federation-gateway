@@ -94,5 +94,7 @@ RUN apt-cleanup.sh build-essential
 
 USER appuser
 
+EXPOSE 3000/tcp
+
 # Bake package.json serve command into the image
 CMD ["npm", "run", "serve"]
