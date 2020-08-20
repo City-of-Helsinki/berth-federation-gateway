@@ -32,8 +32,8 @@ build-production:
   extends: .build
   variables:
     DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
-    DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://api.hel.fi/profiili/"
-    DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://api.hel.fi/berths/"
+    DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://api.hel.fi/profiili/graphql/"
+    DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://api.hel.fi/berths/graphql_v2/"
   only:
     refs:
       - master
