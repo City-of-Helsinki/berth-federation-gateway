@@ -52,3 +52,7 @@ staging:
   only:
     refs:
       - develop
+
+production:
+  variables:
+    DOCKER_IMAGE_NAME: "$CI_PROJECT_NAME-production"
