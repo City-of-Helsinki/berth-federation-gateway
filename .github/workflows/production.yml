@@ -16,7 +16,12 @@ env:
   BUILD_ARTIFACT_FOLDER: "build_artifacts"
   SERVICE_ARTIFACT_FOLDER: "service_artifacts"
   SERVICE_PORT: 3000
-       
+  K8S_REQUEST_CPU: 20m
+  K8S_REQUEST_RAM: 50Mi
+  K8S_LIMIT_CPU: 50m
+  K8S_LIMIT_RAM: 100Mi
+  K8S_REPLICACOUNT: 2
+
 jobs:
   build:
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags')
