@@ -2,7 +2,7 @@ name: Build & Staging
 on:
   push:
     branches:
-      - develop
+      - master
 
 env:
   CONTAINER_REGISTRY: ghcr.io
@@ -27,7 +27,7 @@ jobs:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-staging
           DOCKER_BUILD_ARG_DEBUG: "debug"
           DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://profiili-api.test.kuva.hel.ninja/graphql/"
-          DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.kuva.hel.ninja/graphql_v2/"
+          DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.kuva.hel.ninja/graphql/"
 
   staging:
     runs-on: ubuntu-latest
