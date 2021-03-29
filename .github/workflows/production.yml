@@ -29,7 +29,7 @@ jobs:
         env:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-production
           DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://api.hel.fi/profiili/graphql/"
-          DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://api.hel.fi/berths/graphql_v2/"
+          DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://api.hel.fi/berths/graphql/"
 
   production:
     if: startsWith(github.ref, 'refs/tags')
