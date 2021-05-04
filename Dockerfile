@@ -14,6 +14,9 @@ ENV OPEN_CITY_PROFILE_API_URL $OPEN_CITY_PROFILE_API_URL
 ARG BERTH_RESERVATIONS_API_URL
 ENV BERTH_RESERVATIONS_API_URL $BERTH_RESERVATIONS_API_URL
 
+# header size issue
+ENV NODE_OPTIONS=--max-http-header-size=16384
+
 # Global npm deps in a non-root user directory
 ENV NPM_CONFIG_PREFIX=/app/.npm-global
 ENV PATH=$PATH:/app/.npm-global/bin

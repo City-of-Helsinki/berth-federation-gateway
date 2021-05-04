@@ -22,6 +22,7 @@ if [ -n "$BERTH_RESERVATIONS_API_URL" ]; then
     echo "Berth reservations GrahpQL API is available!"
 fi
 
+export NODE_OPTIONS="--max-http-header-size=16384"
 # Start server
 if [[ ! -z "$@" ]]; then
     "$@"
