@@ -27,7 +27,7 @@ This specific gateway combines two projects:
       setups for each project
     * you can use the test instances managed by the City of Helsinki:
         - https://profiili-api.test.kuva.hel.ninja/graphql/ for profile
-        - https://venepaikka-api.test.hel.ninja/graphql_v2/ for berths
+        - https://venepaikka-api.test.kuva.hel.ninja/graphql/ for berths
 
 3. Adjust other variables according to your needs.
 
