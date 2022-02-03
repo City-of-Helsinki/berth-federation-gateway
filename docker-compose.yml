@@ -9,7 +9,7 @@ services:
             - .:/app
             - /app/node_modules
         ports:
-            - "3000:3000"
+            - "3333:3000"
         container_name: berth-federation
 
 networks:
