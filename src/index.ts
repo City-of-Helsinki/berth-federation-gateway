@@ -30,7 +30,11 @@ const gateway = new ApolloGateway({
   buildService({ name, url }) {
     return new AuthenticatedDataSource({ name, url });
   },
-  experimental_pollInterval: 600000, // every 10 min
+  // "Polling running services is dangerous and not recommended in production.
+  // Polling should only be used against a registry.
+  // If you are polling running services, use with caution"
+  // - https://github.com/apollographql/apollo-server/discussions/4280.
+  // experimental_pollInterval: 600000, // every 10 min
 });
 
 (async () => {
