@@ -16,7 +16,8 @@
     "apollo-server": "^2.9.16",
     "dotenv": "^8.2.0",
     "graphql": "^14.4.2",
-    "graphql-voyager": "^1.0.0-rc.28"
+    "graphql-voyager": "^1.0.0-rc.28",
+    "node-fetch": "^2.6.6"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.155",
