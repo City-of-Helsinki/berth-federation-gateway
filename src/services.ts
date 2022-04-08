@@ -1,20 +1,18 @@
 import fetch from "node-fetch";
+import { getDefaultHealthCheckEndpoint } from "./utils";
 
 export const openCityProfileBackend: string =
   process.env.OPEN_CITY_PROFILE_API_URL;
 export const berthReservationsBackend: string =
   process.env.BERTH_RESERVATIONS_API_URL;
 
-export const defaultHealthCheckPath = "/healthz";
-
-export const getDefaultBackendReadinessEndpoint = (url: string) => {
-  const origin = new URL(url).origin;
-  const healthCheckEndpoint = new URL(defaultHealthCheckPath, origin);
-  return healthCheckEndpoint.href;
-};
-
+/**
+ * Test the connection to the Berth Reservations API.
+ * NOTE: Since the Berth Gateway and the BErth API are in the same network,
+ * the connection can be tested with a simple healthz-GET-request.
+ */
 export const testConnectionToBerthReservationsBackend = async () => {
-  const healthCheckEndpoint = getDefaultBackendReadinessEndpoint(
+  const healthCheckEndpoint = getDefaultHealthCheckEndpoint(
     berthReservationsBackend
   );
   const response = await fetch(healthCheckEndpoint).catch((error) =>
@@ -27,15 +25,34 @@ export const testConnectionToBerthReservationsBackend = async () => {
   return true;
 };
 
+/**
+ * Test the connection to the Open City Profile -API.
+ * NOTE: The healthz -endpoint is blocked from outside network,
+ * so the result for a basic healthz request would be 502 - Bad Gateway.
+ * The test needs to be done to graphql -endpoint,
+ * but it should be noted that without an apiToken,
+ * the response will always contain
+ * an error message: "You do not have permission to perform this action.",
+ * but will still have a status code 200.
+ */
 export const testConnectionToOpenCityProfileBackend = async () => {
-  const healthCheckEndpoint = getDefaultBackendReadinessEndpoint(
-    openCityProfileBackend
-  );
-  const response = await fetch(healthCheckEndpoint).catch((error) =>
-    console.error(error)
-  );
+  const response = await fetch(openCityProfileBackend, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+      query StatusQuery {
+        myProfile {
+          id
+        }
+      }
+      `,
+    }),
+  }).catch((error) => console.error(error));
   if (!response || response.status !== 200) {
-    console.warn("The connection to the Open City Profile is not healthy.");
+    console.warn(`The connection to ${openCityProfileBackend} is not healthy.`);
     return false;
   }
   return true;
