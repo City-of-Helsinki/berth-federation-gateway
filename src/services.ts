@@ -7,35 +7,55 @@ export const berthReservationsBackend: string =
 
 export const defaultHealthCheckPath = "/healthz";
 
-export const getDefaultBackendReadinessEndpoint = (url: string) => {
-  const origin = new URL(url).origin;
-  const healthCheckEndpoint = new URL(defaultHealthCheckPath, origin);
-  return healthCheckEndpoint.href;
-};
-
 export const testConnectionToBerthReservationsBackend = async () => {
-  const healthCheckEndpoint = getDefaultBackendReadinessEndpoint(
-    berthReservationsBackend
-  );
-  const response = await fetch(healthCheckEndpoint).catch((error) =>
-    console.error(error)
-  );
+  const response = await fetch(berthReservationsBackend, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+      query StatusQuery {
+        berthProfiles {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+      }
+      `,
+    }),
+  }).catch((error) =>
+  console.error(error)
+);
   if (!response || response.status !== 200) {
-    console.warn("The connection to the Berth API is not healthy.");
+    console.warn(`The connection to ${berthReservationsBackend} is not healthy.`);
     return false;
   }
   return true;
 };
 
 export const testConnectionToOpenCityProfileBackend = async () => {
-  const healthCheckEndpoint = getDefaultBackendReadinessEndpoint(
-    openCityProfileBackend
-  );
-  const response = await fetch(healthCheckEndpoint).catch((error) =>
-    console.error(error)
-  );
+  const response = await fetch(openCityProfileBackend, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `
+      query StatusQuery {
+        myProfile {
+          id
+        }
+      }
+      `,
+    }),
+  }).catch((error) =>
+  console.error(error)
+);
   if (!response || response.status !== 200) {
-    console.warn("The connection to the Open City Profile is not healthy.");
+    console.warn(`The connection to ${openCityProfileBackend} is not healthy.`);
     return false;
   }
   return true;
