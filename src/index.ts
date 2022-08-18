@@ -52,15 +52,16 @@ const gateway = new ApolloGateway({
     introspection: debug,
   });
 
-  const serverStartupStatus = await server.start()
-    .then(val => {
+  const serverStartupStatus = await server
+    .start()
+    .then((val) => {
       console.log(`Server startup success: ${val}`);
       return true;
     })
-    .catch(val => {
+    .catch((val) => {
       console.log(`Server startup failed: ${val}`);
       return false;
-    })
+    });
 
   const app = express();
 
@@ -95,8 +96,8 @@ const gateway = new ApolloGateway({
       messages.push("Server startup failed.");
     }
 
-    await gatewayHealth.catch(error_val => {
-      const err_message =`Gateway issues: ${error_val}`;
+    await gatewayHealth.catch((error_val) => {
+      const err_message = `Gateway issues: ${error_val}`;
       console.log(err_message);
       messages.push(err_message);
     });
@@ -115,9 +116,8 @@ const gateway = new ApolloGateway({
     }
   });
 
-
-  server.applyMiddleware({ 
-    app, 
+  server.applyMiddleware({
+    app,
     path: "/",
     onHealthCheck: () => {
       return gateway.serviceHealthCheck();
@@ -128,5 +128,4 @@ const gateway = new ApolloGateway({
     // eslint-disable-next-line no-console
     console.log(`🚀 Server ready at http://localhost:${port}`)
   );
-
 })();
