@@ -29,7 +29,7 @@ jobs:
           DOCKER_IMAGE_NAME: ${{ env.REPO_NAME }}-review
           DOCKER_BUILD_ARG_DEBUG: "debug"
           DOCKER_BUILD_ARG_OPEN_CITY_PROFILE_API_URL: "https://profile-api.test.hel.ninja/graphql/"
-          DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://venepaikka-api.test.kuva.hel.ninja/graphql/"
+          DOCKER_BUILD_ARG_BERTH_RESERVATIONS_API_URL: "https://berth-reservations-verify-ven-1522-695.test.kuva.hel.ninja/graphql/"
 
   review:
     runs-on: ubuntu-latest
