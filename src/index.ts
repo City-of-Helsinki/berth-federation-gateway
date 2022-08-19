@@ -30,6 +30,7 @@ const gateway = new ApolloGateway({
   buildService({ name, url }) {
     return new AuthenticatedDataSource({ name, url });
   },
+  serviceHealthCheck: true,
   // "Polling running services is dangerous and not recommended in production.
   // Polling should only be used against a registry.
   // If you are polling running services, use with caution"
@@ -50,6 +51,17 @@ const gateway = new ApolloGateway({
     playground: debug,
     introspection: debug,
   });
+
+  const serverStartupStatus = await server
+    .start()
+    .then(() => {
+      console.log("Server startup success.");
+      return true;
+    })
+    .catch((val) => {
+      console.log(`Server startup failed: ${val}.`);
+      return false;
+    });
 
   const app = express();
 
@@ -75,9 +87,24 @@ const gateway = new ApolloGateway({
   });
 
   app.get("/healthz", async (req, res) => {
+    //TODO: Checking the health with custom test connection functions should be pointless since the healthcheck is done already by the ApolloGateway instance (serviceHealthCheck: true in GatewayConfig).
+    // ...Left here for monitoring.
+
     const isBerthApiHealthy = await testConnectionToBerthReservationsBackend();
     const isProfileApiHealthy = await testConnectionToOpenCityProfileBackend();
+    const gatewayHealth = gateway.serviceHealthCheck();
+
     let messages: string[] = [];
+    if (!serverStartupStatus) {
+      messages.push("Server startup failed.");
+    }
+
+    await gatewayHealth.catch((error_val) => {
+      const err_message = `Gateway issues: ${error_val}`;
+      console.error(err_message);
+      messages.push(err_message);
+    });
+
     if (!isBerthApiHealthy) {
       messages.push("Connection issues with the Berth API.");
     }
@@ -92,7 +119,13 @@ const gateway = new ApolloGateway({
     }
   });
 
-  server.applyMiddleware({ app, path: "/" });
+  server.applyMiddleware({
+    app,
+    path: "/",
+    onHealthCheck: () => {
+      return gateway.serviceHealthCheck();
+    },
+  });
 
   app.listen({ port }, () =>
     // eslint-disable-next-line no-console
