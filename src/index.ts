@@ -54,12 +54,12 @@ const gateway = new ApolloGateway({
 
   const serverStartupStatus = await server
     .start()
-    .then((val) => {
-      console.log(`Server startup success: ${val}`);
+    .then(() => {
+      console.log("Server startup success.");
       return true;
     })
     .catch((val) => {
-      console.log(`Server startup failed: ${val}`);
+      console.log(`Server startup failed: ${val}.`);
       return false;
     });
 
@@ -87,6 +87,9 @@ const gateway = new ApolloGateway({
   });
 
   app.get("/healthz", async (req, res) => {
+    //TODO: Checking the health with custom test connection functions should be pointless since the healthcheck is done already by the ApolloGateway instance (serviceHealthCheck: true in GatewayConfig).
+    // ...Left here for monitoring.
+
     const isBerthApiHealthy = await testConnectionToBerthReservationsBackend();
     const isProfileApiHealthy = await testConnectionToOpenCityProfileBackend();
     const gatewayHealth = gateway.serviceHealthCheck();
@@ -98,7 +101,7 @@ const gateway = new ApolloGateway({
 
     await gatewayHealth.catch((error_val) => {
       const err_message = `Gateway issues: ${error_val}`;
-      console.log(err_message);
+      console.error(err_message);
       messages.push(err_message);
     });
 
