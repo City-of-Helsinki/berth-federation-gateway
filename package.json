@@ -16,8 +16,7 @@
     "apollo-server": "^3.10.3",
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
-    "graphql-voyager": "^1.0.0-rc.30",
-    "node-fetch": "^3.2.10"
+    "graphql-voyager": "^1.0.0-rc.30"
   },
   "devDependencies": {
     "@types/jest": "^29.1.2",

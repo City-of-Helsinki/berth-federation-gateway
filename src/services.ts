@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+//import fetch from "node-fetch";
 import { getDefaultHealthCheckEndpoint } from "./utils";
 
 export const openCityProfileBackend: string =
@@ -12,16 +12,16 @@ export const berthReservationsBackend: string =
  * the connection can be tested with a simple healthz-GET-request.
  */
 export const testConnectionToBerthReservationsBackend = async () => {
-  const healthCheckEndpoint = getDefaultHealthCheckEndpoint(
-    berthReservationsBackend
-  );
-  const response = await fetch(healthCheckEndpoint).catch((error) =>
-    console.error(error)
-  );
-  if (!response || response.status !== 200) {
-    console.warn("The connection to the Berth API is not healthy.");
-    return false;
-  }
+//  const healthCheckEndpoint = getDefaultHealthCheckEndpoint(
+//    berthReservationsBackend
+//  );
+//  const response = await fetch(healthCheckEndpoint).catch((error) =>
+//    console.error(error)
+//  );
+//  if (!response || response.status !== 200) {
+//    console.warn("The connection to the Berth API is not healthy.");
+//    return false;
+//  }
   return true;
 };
 
@@ -36,24 +36,24 @@ export const testConnectionToBerthReservationsBackend = async () => {
  * but will still have a status code 200.
  */
 export const testConnectionToOpenCityProfileBackend = async () => {
-  const response = await fetch(openCityProfileBackend, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `
-      query StatusQuery {
-        myProfile {
-          id
-        }
-      }
-      `,
-    }),
-  }).catch((error) => console.error(error));
-  if (!response || response.status !== 200) {
-    console.warn(`The connection to ${openCityProfileBackend} is not healthy.`);
-    return false;
-  }
+//  const response = await fetch(openCityProfileBackend, {
+//    method: "POST",
+//    headers: {
+//      "Content-Type": "application/json",
+//    },
+//    body: JSON.stringify({
+//      query: `
+//      query StatusQuery {
+//        myProfile {
+//          id
+//        }
+//      }
+//      `,
+//    }),
+//  }).catch((error) => console.error(error));
+//  if (!response || response.status !== 200) {
+//    console.warn(`The connection to ${openCityProfileBackend} is not healthy.`);
+//    return false;
+//  }
   return true;
 };
