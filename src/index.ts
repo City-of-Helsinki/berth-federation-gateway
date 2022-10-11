@@ -41,14 +41,14 @@ const gateway = new ApolloGateway({
 (async () => {
   const server = new ApolloServer({
     gateway,
-    subscriptions: false,
+//    subscriptions: false,
     context: ({ req }) => {
       const apiTokens: string = req.headers["api-tokens"] || "";
       const acceptLanguage: string = req.headers["accept-language"] || "";
       return { apiTokens, acceptLanguage };
     },
     debug: debug,
-    playground: debug,
+//    playground: debug,
     introspection: debug,
   });
 
