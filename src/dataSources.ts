@@ -95,9 +95,10 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
     };
 
     const httpRequest = new Request(request.http.url, options);
+    let httpResponse = undefined;
 
     try {
-      const httpResponse = await fetch(httpRequest);
+      httpResponse = await fetch(httpRequest);
 
       const body = await this.parseBody(httpResponse);
 
@@ -111,7 +112,8 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 
       return response;
     } catch (error) {
-//      this.didEncounterError(error, fetchRequest, httpResponse, context);
+      // didEncounterError only throw error ...
+      this.didEncounterError(error, httpResponse, httpResponse, context);
       throw error;
     }
   }
