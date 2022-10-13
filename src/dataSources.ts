@@ -24,7 +24,8 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
     }
   }
 
-  async processFileUpload({ request, context }, fileVariables) {
+  async processFileUpload(args, fileVariables) {
+    const { request, context } = args;
     const form = new FormData();
 
     // cannot mutate the request object
@@ -85,7 +86,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
       headers,
     };
     if (this.willSendRequest) {
-      await this.willSendRequest({ request, context });
+      await this.willSendRequest(args);
     }
 
     const options = {
@@ -94,9 +95,10 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
     };
 
     const httpRequest = new Request(request.http.url, options);
+    let httpResponse = undefined;
 
     try {
-      const httpResponse = await fetch(httpRequest);
+      httpResponse = await fetch(httpRequest);
 
       const body = await this.parseBody(httpResponse);
 
@@ -110,7 +112,8 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 
       return response;
     } catch (error) {
-      this.didEncounterError(error, httpRequest);
+      // didEncounterError only throw error ...
+      this.didEncounterError(error, httpResponse, httpResponse, context);
       throw error;
     }
   }

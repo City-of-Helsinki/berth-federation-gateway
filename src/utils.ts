@@ -1,4 +1,11 @@
+
+export const openCityProfileBackend: string =
+process.env.OPEN_CITY_PROFILE_API_URL;
+export const berthReservationsBackend: string =
+process.env.BERTH_RESERVATIONS_API_URL;
+
 export const defaultHealthCheckPath = "/healthz";
+export const defaultReadinessPath = "/readiness";
 
 export const removeTrailingSlash = (str: string) => {
   return str.replace(/\/+$/, "");
