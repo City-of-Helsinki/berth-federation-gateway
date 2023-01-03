@@ -95,8 +95,9 @@ RUN yarn && yarn cache clean --force
 USER root
 RUN apt-cleanup.sh build-essential
 
-# OpenShift write access to email templates for generated -folder
-USER root
+# OpenShift write access for app/.npm-global -folder
+RUN mkdir -p /app/.npm-global
+RUN chown appuser:appuser /app/.npm-global
 RUN chgrp -R 0 /app/.npm-global && chmod g+w -R /app/.npm-global
 
 USER appuser
