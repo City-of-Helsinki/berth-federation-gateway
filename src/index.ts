@@ -11,10 +11,10 @@ import {
   defaultReadinessPath,
 } from "./utils";
 
-import { 
+import {
   ApolloServerPluginLandingPageGraphQLPlayground,
-  ApolloServerPluginLandingPageDisabled 
-} from 'apollo-server-core';
+  ApolloServerPluginLandingPageDisabled,
+} from "apollo-server-core";
 
 dotenv.config();
 
@@ -27,10 +27,13 @@ const gateway = new ApolloGateway({
   serviceList: [
     // name of the service is the same as its API scope for auth purposes
     {
-      name: "https://api.hel.fi/auth/helsinkiprofile",
+      name: process.env.OPEN_CITY_PROFILE_SCOPE, // "https://api.hel.fi/auth/helsinkiprofile"
       url: openCityProfileBackend,
     },
-    { name: "https://api.hel.fi/auth/berths", url: berthReservationsBackend },
+    {
+      name: process.env.BERTH_RESERVATIONS_API_SCOPE, // "https://api.hel.fi/auth/berths"
+      url: berthReservationsBackend,
+    },
   ],
   buildService({ name, url }) {
     return new AuthenticatedDataSource({ name, url });
@@ -50,7 +53,9 @@ const gateway = new ApolloGateway({
     introspection: debug,
     plugins: [
       // Playground
-      debug == true ? ApolloServerPluginLandingPageGraphQLPlayground() : ApolloServerPluginLandingPageDisabled(),
+      debug == true
+        ? ApolloServerPluginLandingPageGraphQLPlayground()
+        : ApolloServerPluginLandingPageDisabled(),
     ],
   });
 
