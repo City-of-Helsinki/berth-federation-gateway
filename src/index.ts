@@ -41,6 +41,63 @@ const gateway = new ApolloGateway({
   serviceHealthCheck: true,
 });
 
+const devDebugPlugin = {
+  async requestDidStart(requestContext) {
+    const output = (stage: String, requestContext: any) => {
+      console.log(`-- ${stage} -- context`);
+      console.log(requestContext.context);
+      console.log(`-- ${stage} -- request`);
+      console.log(requestContext.request);
+      console.log(`-- ${stage} -- request -- http -- url`);
+      console.log(requestContext.request.http.url);
+      console.log(`-- ${stage} -- request -- http -- headers`);
+      console.log(requestContext.request.http.headers);
+      console.log(`-- ${stage} -- response`);
+      console.log(requestContext.response);
+      const headers = requestContext.response.http.headers[Symbol.iterator]();
+      for (const header of headers) {
+        console.log(header);
+      }
+      console.log(`-- ${stage} -- errors`);
+      console.log(requestContext.errors);
+    };
+
+    if (requestContext.request.query.indexOf("IntrospectionQuery") == -1) {
+      console.log("-- requestDidStart");
+      return {
+        async parsingDidStart(requestContext) {
+          output("parsingDidStart", requestContext);
+        },
+
+        async validationDidStart(requestContext) {
+          output("validationDidStart", requestContext);
+        },
+
+        async didEncounterErrors(requestContext) {
+          output("didEncounterErrors", requestContext);
+        },
+
+        async didResolveOperation(requestContext) {
+          output("didResolveOperation", requestContext);
+        },
+
+        async executionDidStart(requestContext) {
+          output("executionDidStart", requestContext);
+        },
+
+        async responseForOperation(requestContext) {
+          output("responseForOperation", requestContext);
+          return null;
+        },
+
+        async willSendResponse(requestContext) {
+          output("willSendResponse", requestContext);
+        },
+      };
+    } else return {};
+  },
+};
+
 (async () => {
   const server = new ApolloServer({
     gateway,
@@ -51,12 +108,10 @@ const gateway = new ApolloGateway({
     },
     debug: debug,
     introspection: debug,
-    plugins: [
-      // Playground
+    plugins:
       debug == true
-        ? ApolloServerPluginLandingPageGraphQLPlayground()
-        : ApolloServerPluginLandingPageDisabled(),
-    ],
+        ? [devDebugPlugin, ApolloServerPluginLandingPageGraphQLPlayground()]
+        : [ApolloServerPluginLandingPageDisabled()],
   });
 
   const serverStartupStatus = await server
