@@ -164,6 +164,10 @@ const devDebugPlugin = {
 
     // 504 Gateway Timeout
     if (messages.length > 0) {
+      if (debug === true) {
+        console.log("!!!GATEWAY TIMEOUT!!!");
+        console.log(messages);
+      }
       res.status(504).json({ status: "ERROR", messages });
     } else {
       res.status(200).json({ status: "OK" });
