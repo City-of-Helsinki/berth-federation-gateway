@@ -182,8 +182,11 @@ const devDebugPlugin = {
     },
   });
 
-  app.listen({ port }, () =>
+  const s = app.listen({ port }, () =>
     // eslint-disable-next-line no-console
     console.log(`🚀 Server ready at http://localhost:${port}`)
   );
+
+  // FIXME: Long timeout to support certain long running queries
+  s.setTimeout(10 * 60 * 1000);
 })();
