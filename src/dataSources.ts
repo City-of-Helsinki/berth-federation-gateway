@@ -82,6 +82,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 
     request.http = {
       method: "POST",
+      timeout: 10 * 60 * 1000,
       url: this.url,
       headers,
     };
