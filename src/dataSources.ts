@@ -1,15 +1,15 @@
-import { RemoteGraphQLDataSource } from '@apollo/gateway';
-import { fetch, Request, Headers } from 'apollo-server-env';
-import { isObject } from '@apollo/gateway/dist/utilities/predicates';
-import * as FormData from 'form-data';
-import * as _ from 'lodash';
+import { RemoteGraphQLDataSource } from "@apollo/gateway";
+import { fetch, Request, Headers } from "apollo-server-env";
+import { isObject } from "@apollo/gateway/dist/utilities/predicates";
+import * as FormData from "form-data";
+import * as _ from "lodash";
 
 /**
  * Custom class wrapper that allows passing files to downstream services.
- * 
+ *
  * Follows [graphql-multipart-request-spec](https://github.com/jaydenseric/graphql-multipart-request-spec)
  * Based on [this gist](https://gist.github.com/bl42/881d85ee0dd92bbe68e93dcd0c99cfdb)
- * 
+ *
  * If apollo-server at some point implements the same logic, this custom wrapper can be dropped.
  */
 export class FileUploadDataSource extends RemoteGraphQLDataSource {
@@ -39,7 +39,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
       variables,
     });
 
-    form.append('operations', operations);
+    form.append("operations", operations);
 
     const resolvedFiles = await Promise.all(
       fileVariables.map(async ([variableName, file]) => {
@@ -56,7 +56,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
       }),
       {}
     );
-    form.append('map', JSON.stringify(fileMap));
+    form.append("map", JSON.stringify(fileMap));
 
     await Promise.all(
       resolvedFiles.map(async ([, contents], i) => {
@@ -72,8 +72,8 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 
     const headers = (request.http && request.http.headers) || new Headers();
 
-    form.getLength(function(err, length) {
-      headers.set('Content-Length', length);
+    form.getLength(function (err, length) {
+      headers.set("Content-Length", length);
     });
 
     Object.entries(form.getHeaders() || {}).forEach(([k, value]) => {
@@ -81,7 +81,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
     });
 
     request.http = {
-      method: 'POST',
+      method: "POST",
       url: this.url,
       headers,
     };
@@ -134,18 +134,18 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
     _extract(obj);
     return files;
   }
-  onReadStream = readStream => {
+  onReadStream = (readStream) => {
     return new Promise((resolve, reject) => {
       var buffers = [];
-      readStream.on('data', function(data) {
+      readStream.on("data", function (data) {
         buffers.push(data);
       });
-      readStream.on('end', function() {
+      readStream.on("end", function () {
         var actualContents = Buffer.concat(buffers);
 
         resolve(actualContents);
       });
-      readStream.on('error', function(err) {
+      readStream.on("error", function (err) {
         reject(err);
       });
     });
@@ -158,32 +158,32 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 export class AuthenticatedDataSource extends FileUploadDataSource {
   // Make the class accept "name" property
   constructor(
-      config?: Partial<AuthenticatedDataSource> &
-          object &
-          ThisType<AuthenticatedDataSource>,
+    config?: Partial<AuthenticatedDataSource> &
+      object &
+      ThisType<AuthenticatedDataSource>
   ) {
-      super();
-      if (config) {
-          return Object.assign(this, config);
-      }
+    super();
+    if (config) {
+      return Object.assign(this, config);
+    }
   }
   name!: string;
 
   willSendRequest({ request, context }) {
-      // (context as any) due to typescript-related bug in apollo-gateway:
-      // https://github.com/apollographql/apollo-server/issues/3307
-      if ((context as any).apiTokens) {
-          let apiTokens = JSON.parse((context as any).apiTokens);
-
-          request.http.headers.set(
-              "Authorization",
-              "Bearer " + apiTokens[this.name]
-          );
-      }
-
+    // (context as any) due to typescript-related bug in apollo-gateway:
+    // https://github.com/apollographql/apollo-server/issues/3307
+    if ((context as any).apiTokens) {
+      let apiTokens = JSON.parse((context as any).apiTokens);
+      request.http.timeout = 10000;
       request.http.headers.set(
-          "Accept-Language",
-          (context as any).acceptLanguage
+        "Authorization",
+        "Bearer " + apiTokens[this.name]
       );
+    }
+
+    request.http.headers.set(
+      "Accept-Language",
+      (context as any).acceptLanguage
+    );
   }
 }
