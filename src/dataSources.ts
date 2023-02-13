@@ -174,7 +174,7 @@ export class AuthenticatedDataSource extends FileUploadDataSource {
     // https://github.com/apollographql/apollo-server/issues/3307
     if ((context as any).apiTokens) {
       let apiTokens = JSON.parse((context as any).apiTokens);
-      request.http.timeout = 10000;
+      request.http.timeout = 10 * 60 * 1000;
       request.http.headers.set(
         "Authorization",
         "Bearer " + apiTokens[this.name]
