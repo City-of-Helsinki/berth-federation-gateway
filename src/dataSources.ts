@@ -99,7 +99,9 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
     let httpResponse = undefined;
 
     try {
-      httpResponse = await fetch(httpRequest);
+      httpResponse = await fetch(httpRequest, {
+        timeout: 10 * 60 * 1000,
+      });
 
       const body = await this.parseBody(httpResponse);
 

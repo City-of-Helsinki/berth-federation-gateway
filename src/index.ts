@@ -38,6 +38,7 @@ const gateway = new ApolloGateway({
   buildService({ name, url }) {
     return new AuthenticatedDataSource({ name, url });
   },
+  debug: debug,
   serviceHealthCheck: true,
 });
 
