@@ -189,5 +189,5 @@ const devDebugPlugin = {
   );
 
   // FIXME: Long timeout to support certain long running queries
-  s.setTimeout(10 * 60 * 1000);
+  s.setTimeout(2 * 60 * 1000);
 })();
