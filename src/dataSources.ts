@@ -13,6 +13,9 @@ import * as _ from "lodash";
  * If apollo-server at some point implements the same logic, this custom wrapper can be dropped.
  */
 export class FileUploadDataSource extends RemoteGraphQLDataSource {
+  // global datasource timeout is 2 minutes
+  datasourceTimeout = 2 * 60 * 1000;
+
   async process(args) {
     const { request } = args;
 
@@ -82,7 +85,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 
     request.http = {
       method: "POST",
-      timeout: 10 * 60 * 1000,
+      timeout: this.datasourceTimeout,
       url: this.url,
       headers,
     };
@@ -100,7 +103,7 @@ export class FileUploadDataSource extends RemoteGraphQLDataSource {
 
     try {
       httpResponse = await fetch(httpRequest, {
-        timeout: 10 * 60 * 1000,
+        timeout: this.datasourceTimeout,
       });
 
       const body = await this.parseBody(httpResponse);
@@ -177,7 +180,7 @@ export class AuthenticatedDataSource extends FileUploadDataSource {
     // https://github.com/apollographql/apollo-server/issues/3307
     if ((context as any).apiTokens) {
       let apiTokens = JSON.parse((context as any).apiTokens);
-      request.http.timeout = 10 * 60 * 1000;
+      request.http.timeout = this.datasourceTimeout;
       request.http.headers.set(
         "Authorization",
         "Bearer " + apiTokens[this.name]
