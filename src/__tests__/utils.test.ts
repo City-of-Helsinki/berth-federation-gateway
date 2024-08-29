@@ -34,12 +34,12 @@ describe("service utils", () => {
         "https://profile-api.test.hel.ninja/healthz",
       ],
       [
-        "https://venepaikka-api.test.kuva.hel.ninja/graphql/",
-        "https://venepaikka-api.test.kuva.hel.ninja/healthz",
+        "https://venepaikat-api.test.hel.ninja/graphql/",
+        "https://venepaikat-api.test.hel.ninja/healthz",
       ],
       [
-        "https://venepaikka-api.test.kuva.hel.ninja/graphql",
-        "https://venepaikka-api.test.kuva.hel.ninja/healthz",
+        "https://venepaikat-api.test.hel.ninja/graphql",
+        "https://venepaikat-api.test.hel.ninja/healthz",
       ],
     ])("converts the common API url %s to %s", (apiUrl, healthzUrl) => {
       expect(utils.getDefaultHealthCheckEndpoint(apiUrl)).toBe(healthzUrl);

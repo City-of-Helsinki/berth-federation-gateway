@@ -18,7 +18,7 @@ export const removeTrailingSlash = (str: string) => {
  * - https://api.hel.fi/profiili/graphql/ -> https://api.hel.fi/profiili/healthz
  * - https://api.hel.fi/berths/graphql/ -> https://api.hel.fi/berths/healthz
  * - https://profile-api.test.hel.ninja/graphql/ -> https://profile-api.test.hel.ninja/healthz
- * - https://venepaikka-api.test.kuva.hel.ninja/graphql/ -> https://venepaikka-api.test.kuva.hel.ninja/healthz
+ * - https://venepaikat-api.test.hel.ninja/graphql/ -> https://venepaikat-api.test.hel.ninja/healthz
  */
 export const getDefaultHealthCheckEndpoint = (url: string) => {
   const apiEndpoint = new URL(url);
