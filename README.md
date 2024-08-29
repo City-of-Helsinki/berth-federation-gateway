@@ -27,7 +27,7 @@ This specific gateway combines two projects:
       setups for each project
     * you can use the test instances managed by the City of Helsinki:
         - https://profile-api.test.hel.ninja/graphql/ for profile
-        - https://venepaikka-api.test.kuva.hel.ninja/graphql/ for berths
+        - https://venepaikat-api.test.hel.ninja/graphql/ for berths
 
 3. Adjust other variables according to your needs.
 
@@ -38,6 +38,6 @@ PORT you specified in the `docker-compose.env.yaml`)
 
 ## Environments
 
-Test environment: https://venepaikka-federation.test.kuva.hel.ninja/
+Test environment: https://venepaikat-federation-gateway.test.hel.ninja/
 
-Voyager graph of all Queries: https://venepaikka-federation.test.kuva.hel.ninja/voyager
+Voyager graph of all Queries: https://venepaikat-federation-gateway.test.hel.ninja/voyager
