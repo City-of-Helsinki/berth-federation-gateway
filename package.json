@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --ext ts --exec 'ts-node' src/index.ts",
     "transpile": "tsc",
-    "serve": "node --max-http-header-size=16000 dist/index.js",
+    "serve": "node --max-http-header-size=65535 dist/index.js",
     "test": "jest"
   },
   "author": "",
