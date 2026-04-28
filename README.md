@@ -1,5 +1,8 @@
 # Berth reservations' federated GraphQL gateway
 
+> [!NOTE]
+> This repository was archived on 2026-04-28. Development has ceased because the project has been replaced by a SaaS-based solution.
+
 :link: Apollo-federation gateway for berth-reservations service :boat: :id:
 
 ## Overview
